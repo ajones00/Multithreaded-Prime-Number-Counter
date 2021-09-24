@@ -19,11 +19,12 @@ struct pthread_arg {
 // decide if n is a prime number by trying all possible factors not greater than sqrt(n), assumption n >= 2
 int is_prime(int n)
 {
-int i;
+    int i;
 
-    for (i = 2; i <= sqrt(n); i++)
+    for (i = 2; i <= sqrt(n); i++) {
         if ( n%i == 0 )
             return(0);
+    }
     return(1);
 }
 
@@ -95,14 +96,14 @@ int main(int argc, char** argv)
         low = 2;
     }
 
-//the number of integers between low to high, inclusive
+    //the number of integers between low to high, inclusive
     total_num = ((high + 1) - low);
 
     //divide those amount of numbers evenly amongst the defined number of threads, this will give a certain amount of numbers to each thread
     int nums_per = total_num/num_thread;
 
 
-// record start time
+    // record start time
     if ( clock_gettime(CLOCK_MONOTONIC, &start_time) ){
         perror("get start_time");
     }
@@ -140,7 +141,7 @@ int main(int argc, char** argv)
         
     }
 
-// wait for all threads to finish
+    // wait for all threads to finish
     for (int i = 0; i < num_thread; i++) {
         // NULL because don't need the returned result here
         pthread_join(pthread[i], NULL);
@@ -154,7 +155,7 @@ int main(int argc, char** argv)
     printf("%u prime numbers between %d and %d\n", num_prime, low, high);
 
 
-// record end time
+    // record end time
     if ( clock_gettime(CLOCK_MONOTONIC, &end_time) ){
         perror("get end_time");
     }
